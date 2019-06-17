@@ -1,0 +1,5 @@
+appData 存储APP传过来的信息的信息
+oCustID 用户id
+goodsCount 购物车数量
+lCarList 购物车信息
+openid

@@ -1,0 +1,29 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<!--
+2013-9-30: Created.
+-->
+<svg>
+<metadata>
+Created by iconfont
+</metadata>
+<defs>
+
+<font id="iconfont" horiz-adv-x="1024" >
+  <font-face
+    font-family="iconfont"
+    font-weight="500"
+    font-stretch="normal"
+    units-per-em="1024"
+    ascent="896"
+    descent="-128"
+  />
+    <missing-glyph />
+    
+    <glyph glyph-name="wode1" unicode="&#58917;" d="M512 360.727273c141.963636 0 256 114.036364 256 256S730.763636 896 512 896c-214.109091 0-256-137.309091-256-279.272727s114.036364-256 256-256z m232.727273-23.272728H279.272727C151.272727 337.454545 46.545455 232.727273 46.545455 104.727273s104.727273-232.727273 232.727272-232.727273h465.454546c128 0 232.727273 104.727273 232.727272 232.727273s-104.727273 232.727273-232.727272 232.727272z"  horiz-adv-x="1024" />
+
+    
+
+
+  </font>
+</defs></svg>
