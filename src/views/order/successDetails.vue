@@ -43,7 +43,7 @@
             <div class="header-r">
                 <p class="q">{{item.formname}}</p>
                 <p class="f">{{item.name}}</p>
-                <p class="s">¥ {{item.price}}</p>
+                <p class="s">¥ {{item.price}}<span v-if="item.point!=0">+{{item.point}}积分</span></p>
                 <p class="f">{{item.expressname}}</p>
             </div>
         </div>
@@ -59,7 +59,7 @@
             </div>
             <div class="shop-price">
                 <h2 style="font-size: 14px;color: #333333;">订单总价</h2>
-                <span style="font-size: 14px;color: #E5532A">￥{{(orderDetail.sumprice+orderDetail.freight).toFixed(2)}}</span>
+                <span style="font-size: 14px;color: #E5532A">￥{{(orderDetail.sumprice+orderDetail.freight).toFixed(2)}} <span v-if="orderDetail.sumpoint!=0">+{{orderDetail.sumpoint}}积分</span></span>
             </div>
         </div>
         <br>

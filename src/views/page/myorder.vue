@@ -4,8 +4,6 @@
         <navbar :title="title" :url="'mine'"></navbar>
         <!-- 内容 -->
         <yd-tab active-color="#000" height="60px" color="#999" :callback="fn">
-
-
             <!-- 全部的订单页面 -->
             <yd-tab-panel label="全部" :active="orderState===-1" tabkey="0">
                         <div class="order-content" v-for="(item,i) in shopList0" :key="i" @click="detailSucess(item.id)">
@@ -23,7 +21,7 @@
                                 <div class="header-r">
                                     <div>
                                         <span style="width: 75%;float: left" class="q">{{j.name}}</span>
-                                        <p style="width: 25%;float: right;text-align: right">¥ {{j.price}}</p>
+                                        <p style="width: 25%;float: right;text-align: right">￥{{j.price}}</p>
                                         <p style="width: 25%;float: right;text-align: right">x{{j.count}}</p>
                                     </div>
                                     <div style="clear: both"></div>
@@ -34,26 +32,25 @@
                             </div>
                             <div class="pass-pic">
                                 <p>
-                                    共{{item.goodscount}}件商品 <span class="color">合计:￥{{item.sumprice}}</span>（含运费￥{{item.freight}})
+                                    共{{item.goodscount}}件商品 <span class="color">合计:￥{{item.sumprice}}</span><span v-if="item.sumpoint!=0">+{{item.sumpoint}}积分</span>（含运费￥{{item.freight}})
                                 </p>
                             </div>
                             <div class="footer">
-                                <img src="../../assets/img/weixin122.png" style="margin-right: 10px;"  width="24" height="24" v-show="item.orderstate==1 && payType==='wx'"  @click.stop="selectPayType('wx')">
-                                <img src="../../assets/img/zhifubao.png" style="margin-right: 10px;"   width="24" height="24" v-show="item.orderstate==1 && payType==='zfb'" @click.stop="selectPayType('zfb')">
+<!--                                <img src="../../assets/img/weixin122.png" style="margin-right: 10px;"  width="24" height="24" v-show="item.orderstate==1 && payType==='wx'"  @click.stop="selectPayType('wx')">-->
+<!--                                <img src="../../assets/img/zhifubao.png" style="margin-right: 10px;"   width="24" height="24" v-show="item.orderstate==1 && payType==='zfb'" @click.stop="selectPayType('zfb')">-->
                                 <div class="del-btn order-btn" v-if="item.orderstate===1 || item.orderstate===4 || item.orderstate===5 || item.orderstate===6" @click.stop="delOrder(item.id,i)">删除订单</div>
                                 <div class="p-btn order-btn" v-if="item.orderstate==5" @click.stop="commentOrder(item)">前去评论</div>
-                                <div class="d-btn order-btn" v-if="item.orderstate==1" @click.stop="pay(item.id)">重新支付</div>
+                                <div class="d-btn order-btn" v-if="item.orderstate==1" @click.stop="selectPay(item.id)">重新支付</div>
+                                <div class="d-btn order-btn" v-if="item.orderstate==3" @click.stop="shop(item.id)">确认收货</div>
                             </div>
                         </div>
                 <!-- 没有时显示 -->
                 <div class="none" v-if="this.shopList0.length===0 && !isNullShow">
-                    <img src="../../assets/img/ding.png">
+                    <img style="width: 100%;" src="../../assets/img/notData.png">
                 </div>
             </yd-tab-panel>
-
-
             <!-- 已经完成的在下面写 -->
-            <yd-tab-panel label="待支付" :active="orderState===1" tabkey="1" >
+            <yd-tab-panel label="待支付" :active="orderState===1" tabkey="1">
                  <div class="order-content" v-for="(item,i) in shopList1" :key="i" @click="detailSucess(item.id)">
                             <div class="order-header">
                                 <div class="b_logo_div"><div class="b_logo_img"></div></div>
@@ -80,23 +77,21 @@
                             </div>
                             <div class="pass-pic">
                                 <p>
-                                    共{{item.goodscount}}件商品 <span class="color">合计:￥{{item.sumprice}}</span>（含运费￥{{item.freight}})
+                                    共{{item.goodscount}}件商品 <span class="color">合计:￥{{item.sumprice}}</span><span v-if="item.sumpoint!=0">+{{item.sumpoint}}积分</span>（含运费￥{{item.freight}})
                                 </p>
                             </div>
                             <div class="footer">
-                                <img src="../../assets/img/weixin122.png" style="margin-right: 10px;"  width="24" height="24" v-show="item.orderstate==1 && payType==='wx'"  @click.stop="selectPayType('wx')">
-                                <img src="../../assets/img/zhifubao.png" style="margin-right: 10px;"   width="24" height="24" v-show="item.orderstate==1 && payType==='zfb'" @click.stop="selectPayType(zfb)">
+<!--                                <img src="../../assets/img/weixin122.png" style="margin-right: 10px;"  width="24" height="24" v-show="item.orderstate==1 && payType==='wx'"  @click.stop="selectPayType('wx')">-->
+<!--                                <img src="../../assets/img/zhifubao.png" style="margin-right: 10px;"   width="24" height="24" v-show="item.orderstate==1 && payType==='zfb'" @click.stop="selectPayType(zfb)">-->
                                 <div class="del-btn order-btn" @click.stop="delOrder(item.id,i)">删除订单</div>
-                                <div class="d-btn order-btn" v-if="item.orderstate==1" @click.stop="pay(item.id)">重新支付</div>
+                                <div class="d-btn order-btn" v-if="item.orderstate==1" @click.stop="selectPay(item.id)">重新支付</div>
                             </div>
                         </div>
                 <!-- 没有时显示 -->
-                <div class="none" v-if="this.shopList1.length===0 && !isNullShow" >
-                    <img src="../../assets/img/ding.png">
+                <div class="none" v-if="this.shopList1.length===0 && !isNullShow">
+                    <img style="width: 100%;" src="../../assets/img/notData.png">
                 </div>
             </yd-tab-panel>
-
-
 
              <yd-tab-panel label="待发货" :active="orderState===2" tabkey="2">
                   <div class="order-content" v-for="(item,i) in shopList2" :key="i" @click="detailSucess(item.id)">
@@ -125,7 +120,7 @@
                             </div>
                             <div class="pass-pic">
                                 <p>
-                                    共{{item.goodscount}}件商品 <span class="color">合计:￥{{item.sumprice}}</span>（含运费￥{{item.freight}})
+                                    共{{item.goodscount}}件商品 <span class="color">合计:￥{{item.sumprice}}</span><span v-if="item.sumpoint!=0">+{{item.sumpoint}}积分</span>（含运费￥{{item.freight}})
                                 </p>
                             </div>
                             <div class="footer">
@@ -133,11 +128,9 @@
                         </div>
                  <!-- 没有时显示 -->
                  <div class="none" v-if="this.shopList2.length===0 && !isNullShow">
-                     <img src="../../assets/img/ding.png">
+                     <img style="width: 100%;" src="../../assets/img/notData.png">
                  </div>
             </yd-tab-panel>
-
-
 
              <yd-tab-panel label="待收货" :active="orderState===3" tabkey="3">
                   <div class="order-content" v-for="(item,i) in shopList3" :key="i" @click="detailSucess(item.id)">
@@ -166,7 +159,7 @@
                             </div>
                             <div class="pass-pic">
                                 <p>
-                                    共{{item.goodscount}}件商品 <span class="color">合计:￥{{item.sumprice}}</span>（含运费￥{{item.freight}})
+                                    共{{item.goodscount}}件商品 <span class="color">合计:￥{{item.sumprice}}</span><span v-if="item.sumpoint!=0">+{{item.sumpoint}}积分</span>（含运费￥{{item.freight}})
                                 </p>
                             </div>
                             <div class="footer">
@@ -174,11 +167,9 @@
                             </div>
                         </div>
                  <div class="none" v-if="this.shopList3.length===0 && !isNullShow">
-                     <img src="../../assets/img/ding.png">
+                     <img style="width: 100%;" src="../../assets/img/notData.png">
                  </div>
             </yd-tab-panel>
-
-
 
              <yd-tab-panel label="待评价" :active="orderState===5" tabkey="4">
                   <div class="order-content" v-for="(item,i) in shopList4" :key="i" @click="detailSucess(item.id)">
@@ -207,7 +198,7 @@
                             </div>
                             <div class="pass-pic">
                                 <p>
-                                    共{{item.goodscount}}件商品 <span class="color">合计:￥{{item.sumprice}}</span>（含运费￥{{item.freight}})
+                                    共{{item.goodscount}}件商品 <span class="color">合计:￥{{item.sumprice}}</span><span v-if="item.sumpoint!=0">+{{item.sumpoint}}积分</span>（含运费￥{{item.freight}})
                                 </p>
                             </div>
                             <div class="footer">
@@ -216,11 +207,9 @@
                             </div>
                         </div>
                          <div class="none" v-if="this.shopList4.length===0 && !isNullShow">
-                             <img src="../../assets/img/ding.png">
+                             <img style="width: 100%;" src="../../assets/img/notData.png">
                          </div>
             </yd-tab-panel>
-
-
             <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10"></div>
         </yd-tab>
         <!-- 弹框的弹出 -->
@@ -254,29 +243,30 @@
             </div>
         </div>
         <!-- 支付弹框 -->
-        <div class="ceng" v-if="showPayType">
+        <yd-popup v-model="showPayType" position="bottom" height="50%">
             <div class="line_1">
                 <div class="line-header_1">
                     <h1 class="line-title_1">选择付款方式</h1>
                     <img class="imgti" src="../../assets/img/X.png" alt="" @click="showPayType=false">
                 </div>
-                <div class="line-header_1" style=" justify-content:space-between;"  @click="change('zfb')">
+                <div class="line-header_1" style=" justify-content:space-between;" v-if="!isWx"  @click="change('zfb')">
                     <img src="../../assets/img/zhifubao.png" alt="" width="24" height="24">
                     <div class="img-r_1">
                         <h1 class="pay">支付宝支付</h1>
-                        <h2 :class="{c:true, d:payType=='zfb'}">✔</h2>
+                        <h2 :class="{c:true, d:payType=='zfb'}"></h2>
                     </div>
                 </div>
                 <div class="line-header_1" style="justify-content:space-between;" @click="change('wx')">
                     <img src="../../assets/img/weixin122.png" alt="" width="24" height="24">
                     <div class="img-r_1">
                         <h1 class="pay">微信支付</h1>
-                        <h2 :class="{c:true, d:payType=='wx'}">✔</h2>
+                        <h2 :class="{c:true, d:payType=='wx'}"></h2>
                     </div>
                 </div>
+                <div class="footer-r" @click="pay">支付</div>
             </div>
+        </yd-popup>
         </div>
-    </div>
 </template>
 <script>
     import navbar from '../../components/nav.vue'
@@ -289,6 +279,7 @@
                 //订单状态：1待支付，2待发货，3待收货，5待评价，6已完成；
                 payType:"zfb",
                 title: "我的订单",
+                isWx:false,
                 showPayType:false,
                 show1: false,
                 busy: false,
@@ -314,7 +305,7 @@
         created() {
             var ua = window.navigator.userAgent.toLowerCase();
             if (ua.match(/MicroMessenger/i) == 'micromessenger') {
-                this.payType="wx";
+                this.isWx = true;
             }
             this.orderState=this.$route.params.state;
             this.param.pOrderstate=this.orderState || -1;//全部
@@ -332,8 +323,13 @@
             next();
         },
         methods: {
+            //选择支付方式
+            selectPay(id) {
+                this.orderId=id;
+                this.showPayType=true;
+            },
             //重新支付
-            pay(id){
+            pay(){
                 this.$dialog.loading.open('正在调起支付,请稍等');
                 //判断是否是微信浏览器
                 var ua = window.navigator.userAgent.toLowerCase();
@@ -342,7 +338,7 @@
                     //公众号支付
                     let param={
                         "payType":"jsapi",
-                        "pOrderID":id
+                        "pOrderID":this.orderId
                     };
                     this.publicCodePay(param);
                     this.$dialog.loading.close();/* 移除loading */
@@ -352,7 +348,7 @@
                         //支付宝
                         let param={
                             "payType":"zfb",
-                            "pOrderID":id
+                            "pOrderID":this.orderId
                         };
                         this.$axios.post("/pay/newOrder",param).then((result) => {
                             //移除loading
@@ -364,7 +360,7 @@
                         //this.$dialog.loading.open('正在调起H5支付,请稍等');
                         let param={
                             "payType":"h5",
-                            "pOrderID":id
+                            "pOrderID":this.orderId
                         };
                         this.$axios.post("/pay/newOrder", param).then((result) => {
                             //移除loading
@@ -431,7 +427,6 @@
                 } else {
                     onBridgeReady();
                 }
-
             },
             shop(id){
              this.show1=true;
@@ -556,7 +551,7 @@
             },
             //评论
             commentOrder(list) {
-                sessionStorage.setItem("commentrenList", JSON.stringify(list));
+                localStorage.setItem("commentrenList", JSON.stringify(list));
                 //this.$store.commit("commentrenList", list);
                 this.$router.push({name: "commentren"})
             },
@@ -606,7 +601,6 @@
                 }
             } ,
             change(i) {
-                this.showPayType=false;
                 this.payType = i;
             },
             loadMore() {
@@ -620,7 +614,7 @@
                         case 5:this.pageIndex4++;break;
                     }
                     this.getGoodsList(true);
-                }, 1000);
+                }, 500);
             }
         },
         components: {
@@ -750,8 +744,6 @@
         align-items: center;
         justify-content: flex-end;
     }
-
-
     .active {
         font-size: 12px;
         color: #E5532A;
@@ -768,13 +760,12 @@
         position: fixed;
         top: 0;
     }
-
     .line_1 {
         width: 100%;
         height: 50%;
-        position: absolute;
+        /* position: absolute;
         bottom: 0;
-        left: 0;
+        left: 0; */
         background-color: #fff;
     }
 
@@ -803,13 +794,15 @@
         align-items: center;
         justify-content: space-between;
     }
-    .c {
-        color: #fff;
+   .c {
+        width: 20px;
+        height: 20px;
     }
 
     .d {
-        color: #E9872C;
-        font-size: 24px;
+        background: url('../../assets/img/zhifu.jpg');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
     }
     .order-time{
         position: absolute;
@@ -832,12 +825,9 @@
         color: #FF7A00;
         border: 1px solid #FF5000;
     }
-
     .order-btn{
         padding: 0px .28rem;
     }
-
-
     .b_logo_div{
         display: -webkit-box;
         display: -webkit-flex;
@@ -850,7 +840,7 @@
     .b_logo_img{
         width: 100%;
         height: 100%;
-        background-image: url(//gw.alicdn.com/tfs/TB1LmH7SXXXXXXYXFXXXXXXXXXX-63-63.png_200x200q85s150.jpg_.webp);
+        background-image: url(../../assets/img/tm.png);
         background-repeat: no-repeat;
         background-position: center center;
         background-size: contain;
@@ -866,6 +856,18 @@
     }
     .pay{
         font-size: 12px;
+    }
+    .footer-r {
+        height: 44px;
+        flex: 1;
+        font-size: 13px;
+        color: #FFFFFF;
+        text-align: center;
+        line-height: 44px;
+        background: #F5A623;
+        letter-spacing: 0;
+        width: 80%;
+        margin: 20px auto;
     }
 </style>
 

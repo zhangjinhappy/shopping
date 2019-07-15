@@ -40,9 +40,8 @@
                     pPhoneNumber: "",
                     pCode: "",
                     pName: "",
-                    pMerchantno: sessionStorage.getItem("pMerchantno"),
+                    pMerchantno: localStorage.getItem("pMerchantno"),
                     pOpenID: localStorage.getItem("openId")
-
         }
             }
         },
@@ -100,18 +99,20 @@
                     this.param.TransType="H5SHZC";
                     let result = await this.$axios.post("/wx/register", this.param);
                     if (result != null) {
+                        localStorage.setItem("oCustID","0");
                         this.$dialog.toast({
                             mes: result.message,
                             timeout: 1000
                         });
                         if (result.state != "00") {
+                            localStorage.setItem("oCustID","0");
                         } else {
                             //存储登录标识
-                            sessionStorage.setItem("loginState", "00");
+                            localStorage.setItem("loginState", "00");
                             //清除openId;
                             localStorage.removeItem("openId");
                             //保存用户Id
-                            localStorage.setItem("oCustID", result.oCustID || "");
+                            localStorage.setItem("oCustID", result.oCustID || "0");
                             //保存代理商编号
                             localStorage.setItem("oMerchantno", result.oMerchantno || "");
                             //返回上个页面
@@ -120,7 +121,7 @@
                     }
                 }
             },
-            async sendCode1() {
+             sendCode1() {
                 if (!R_parse_PhoneNumber.test(this.param.pPhoneNumber)) {
                     this.$dialog.toast({
                         mes: "请输入正确的注册手机号码",
@@ -129,20 +130,28 @@
                     return;
                 }
                 this.$dialog.loading.open('发送中...');
-                let res = await this.$axios.post('/send/login' ,{
+                this.$axios.post("/send/getData",{
                     "pPhoneNumber": this.param.pPhoneNumber,
                     "TransType": "FSYZM",
                     "pType": 1
-                });
-                if (res.state == "00") {
-                    this.start1 = true;
+                }).then((result) => {
                     this.$dialog.loading.close();
-                    this.$dialog.toast({
-                        mes: res.msg,
-                        icon: 'success',
-                        timeout: 1500
-                    })
-                }
+                    if(result!=null){
+                        this.$dialog.toast({
+                            mes: result.message,
+                            icon: 'success',
+                            timeout: 1500
+                        });
+                        if (result.state == "00") {
+                            this.start1 = true;
+                            this.$dialog.toast({
+                                mes: result.message,
+                                icon: 'success',
+                                timeout: 1500
+                            })
+                        }
+                    }
+                });
             }
         }
     }

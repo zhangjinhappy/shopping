@@ -7,6 +7,8 @@ import './assets/css/iconfont.css'
 import YDUI from 'vue-ydui'
 import './assets/css/ydui.px.css'
 import infiniteScroll from 'vue-infinite-scroll'
+
+
 Vue.use(infiniteScroll)
 Vue.use(YDUI);
 import {CheckBox, CheckBoxGroup} from 'vue-ydui/dist/lib.px/checkbox'

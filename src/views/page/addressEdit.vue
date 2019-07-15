@@ -101,10 +101,12 @@
         methods: {
             //回显地址
             loadEditAddress(){
+                console.log(this.$store.state.eAddress[0]);
                 this.params.pAddressID=this.$store.state.eAddress[0].id;
                 this.params.pName=this.$store.state.eAddress[0].name;
                 this.params.pPhoneNumber=this.$store.state.eAddress[0].phonenumber;
                 this.params.pAreaCode=this.$store.state.eAddress[0].areacode;
+                this.params.pCityCode=this.$store.state.eAddress[0].citycode;
                 this.params.pDetailAddress=this.$store.state.eAddress[0].detailaddress;
                 this.params.pIsDefault=this.$store.state.eAddress[0].isdefault;
                 this.provcityarea=this.$store.state.eAddress[0].provcityarea;

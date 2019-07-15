@@ -58,8 +58,8 @@
             }
         },
         created(){
-            this.commentrenList = JSON.parse(sessionStorage.getItem("commentrenList"));
-            if(JSON.parse(sessionStorage.getItem("commentrenList"))!=null){
+            this.commentrenList = JSON.parse(localStorage.getItem("commentrenList"));
+            if(JSON.parse(localStorage.getItem("commentrenList"))!=null){
                 this.addtime=this.commentrenList.addtime;
                 this.shopList=this.commentrenList.goodsDetail;
                 for (let i = 0; i < this.shopList.length; i++) {

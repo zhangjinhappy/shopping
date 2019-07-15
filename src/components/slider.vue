@@ -35,19 +35,19 @@
     height: 100%;
   }
   .slider {
-    width: 92%;
+    width: 94%;
     margin: 0px auto;
     background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 3px 4px 10px 2px #BBBBBB;
   }
   .yd-slider{
-    border-radius: 10px;
+    /*border-radius: 10px;*/
+    /*height: 168px;*/
   }
   .yd-slider-item img{
-    border-radius: 10px;
+    /*border-radius: 10px;*/
+    /*max-height: 168px;*/
   }
    img {
-    height: 180px;
+    /*height: 180px;*/
   }
 </style>

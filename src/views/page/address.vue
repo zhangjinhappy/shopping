@@ -64,6 +64,7 @@
                     pName: "",
                     pPhoneNumber: "",
                     pAreaCode: '',
+                    pCityCode:'',
                     pDetailAddress: "",
                     pIsDefault: 0
                 }
@@ -100,6 +101,7 @@
          methods: {
             result1(ret) {
                 this.params.pAreaCode = ret.itemValue3;
+                this.params.pCityCode = ret.itemValue2;
                 this.model1 = ret.itemName1 + ' ' + ret.itemName2 + ' ' + ret.itemName3;
             },
             adress() {
@@ -117,9 +119,9 @@
                     });
                     return;
                 }
-                if (isNull(this.params.pAreaCode)) {
+                if (isNull(this.params.pCityCode)) {
                     this.$dialog.toast({
-                        mes: '请选择区域!',
+                        mes: '请选择城市!',
                         timeout: 1500
                     });
                     return;
@@ -140,7 +142,7 @@
                         if ("00" == result.state) {
                                 this.$router.push({
                                     name: "addressmanage"
-                                })
+                                });
                         }
                     }
                 });

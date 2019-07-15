@@ -3,8 +3,7 @@ import {OCUSTID} from '../types';
 
  //axios.defaults.baseURL = 'http://javautil.top';//设置默认的基本路径
  axios.defaults.baseURL = 'http://mallmanage.zybkeji.com';//设置默认的基本路径
- //axios.defaults.baseURL = 'http://192.168.0.107:8082';//设置默认的基本路径
-
+ //axios.defaults.baseURL = 'http://192.168.0.103:8082';//设置默认的基本路径
   axios.interceptors.response.use((res)=>{
         return res.data;
     });

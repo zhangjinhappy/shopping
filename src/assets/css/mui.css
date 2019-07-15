@@ -3,7 +3,7 @@
  * Mui v3.7.2 (http://dev.dcloud.net.cn/mui) input
  * =====================================================
  */
- yd-list-other
+ /* yd-list-other  .mui-col-xs-6 mui-table-cell*/
 /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
 html
 {
@@ -422,7 +422,6 @@ a:active
 .mui-table-cell
 {
     position: relative;
-
     display: table-cell;
 }
 

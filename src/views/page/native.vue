@@ -4,7 +4,7 @@
         <navbar :title="title" ></navbar>
         <!-- 产品部分 -->
          <div class="none-img"  v-if="this.list.length===0 && !isNullShow">
-             <img src="../../assets/img/ding.png">
+             <img src="../../assets/img/notData.png">
          </div>
         <div class="center">
             <!-- 第一个产品 -->
@@ -19,7 +19,7 @@
                     </div>
                     <br>
                     <div class="native-m">
-                        <span class="number">￥{{item.showprice}}</span>
+                        <span class="number">{{item.showprice}}</span>
                         <i class="word">{{item.ordercount}}人付款</i>
                     </div>
                 </div>
@@ -67,10 +67,10 @@
            getGoodsList(flag){
                 let param = {
                     "TransType": "SPLB",
-                    "pMerchantno":sessionStorage.getItem("pMerchantno"),
+                    "pMerchantno":localStorage.getItem("pMerchantno"),
                     "pType":this.id,
                     "pageIndex":this.page,
-                }
+                };
                this.$axios.post("/send/getData", param).then((res) => {
                    this.isNullShow=false;
                    this.$dialog.loading.close();/* 移除loading */

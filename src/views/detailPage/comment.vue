@@ -5,7 +5,7 @@
         <!-- 内容 -->
         <div class="center" v-for="item in list">
             <div class="center-header">
-                <img src="../../assets/img/50.jpg" width="23" height="23" style="border-radius:50%">
+                <img src="../../assets/img/commentLogo.png" width="23" height="23" style="border-radius:50%">
                 <h1 class="people">{{item.name}} <span style="margin-left: 10px">{{item.addtime}}</span></h1>
             </div>
             <div class="center-content">{{item.content}}</div>
@@ -72,7 +72,7 @@
                         // 当第一次加载数据完之后，把这个滚动到底部的函数触发打开
                         this.show = false;
                     }
-                })
+                });
             },
             loadMore() {
                 this.$dialog.loading.open('加载数据中,请稍等');
